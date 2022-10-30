@@ -60,7 +60,7 @@ jobs:
       #- name: TESTINT APP
       #- run: npm test
       - name: chemin
-        run: pwd
+        run: cd  /home/runner/work/microservice_cicd/microservice_cicd/microservices/AuthService
       - name: contenue
         run: ls
       - name: Build & push Docker image
@@ -69,7 +69,7 @@ jobs:
           image: sodiki/aos_movie_auth_service
           tags: latest
           registry: docker.io
-          dockerfile: ./Dockerfile
+          dockerfile: Dockerfile
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
