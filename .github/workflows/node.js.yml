@@ -67,7 +67,7 @@ jobs:
       - name: Build & push Docker image
         uses: mr-smithers-excellent/docker-build-push@v5
         with:
-          image: sodiki/aos_movie_authService
+          image: sodiki/aos_movie_auth_service
           tags: latest
           registry: docker.io
           dockerfile: Dockerfile
@@ -105,7 +105,7 @@ jobs:
       - name: Build & push Docker image
         uses: mr-smithers-excellent/docker-build-push@v5
         with:
-          image: sodiki/aos_movie_crudService
+          image: sodiki/aos_movie_crud_service
           tags: latest
           registry: docker.io
           dockerfile: Dockerfile
@@ -142,7 +142,7 @@ jobs:
       - name: Build & push Docker image
         uses: mr-smithers-excellent/docker-build-push@v5
         with:
-          image: sodiki/aos_movie_emailService
+          image: sodiki/aos_movie_email_service
           tags: latest
           registry: docker.io
           dockerfile: Dockerfile
@@ -179,7 +179,7 @@ jobs:
       - name: Build & push Docker image
         uses: mr-smithers-excellent/docker-build-push@v5
         with:
-          image: sodiki/aos_movie_reviewService
+          image: sodiki/aos_movie_review_service
           tags: latest
           registry: docker.io
           dockerfile: Dockerfile
@@ -216,7 +216,7 @@ jobs:
       - name: Build & push Docker image
         uses: mr-smithers-excellent/docker-build-push@v5
         with:
-          image: sodiki/aos_movie_searchService
+          image: sodiki/aos_movie_search_service
           tags: latest
           registry: docker.io
           dockerfile: Dockerfile
