@@ -61,10 +61,13 @@ jobs:
       #- run: npm test
       - name: GIT SWITCH REPO
         uses: actions/checkout@v3
+      - name: SWITCH AuthService workdir
+        run:
+          working-directory: ./microservices/AuthService
       - name: Build & push Docker image
         uses: mr-smithers-excellent/docker-build-push@v5
         with:
-          image: sodiki/aosMovieAuthService
+          image: sodiki/aos_movie_authService
           tags: latest
           registry: docker.io
           dockerfile: Dockerfile
