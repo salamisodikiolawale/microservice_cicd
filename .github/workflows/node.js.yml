@@ -66,7 +66,7 @@ jobs:
           tags: latest
           registry: docker.io
           # dockerfile: Dockerfile
-          run: docker build ./microservices/AuthService/Dockerfile --file Dockerfile
+          run: docker build ./AuthService/Dockerfile
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
