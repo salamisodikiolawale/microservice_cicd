@@ -1,0 +1,124 @@
+version: "3.9"
+services:
+
+  reverse-proxy:
+    image: traefik:v2.8
+    command: 
+      - "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=true"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - proxyNetwork
+      - authService
+
+  crud_service:
+    build: ./microservices/CrudMovieService
+    ports:
+      - "3010:3010"
+    depends_on:
+      - reverse-proxy
+    volumes:
+      - type: bind
+        source: ./microservices/CrudMovieService
+        target: /src/app
+    labels:
+     - "traefik.http.middlewares.validation-auth.forwardauth.address=http://auth_service.localhost/validationAuth"
+     - "traefik.http.routers.crud_service.middlewares=validation-auth"
+     - "traefik.http.routers.crud_service.entrypoints=web" 
+     - "traefik.http.routers.crud_service.rule=Host(`crud_service.localhost`)"
+     - "traefik.http.services.crud_service.loadbalancer.server.port=3010"
+    networks:
+      - proxyNetwork
+      - serviceNetwork
+
+  client:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - './frontend:/src/app'
+      # - '/src/app/node_modules'
+    networks:
+      - proxyNetwork
+
+  email_service:
+    build: ./microservices/EmailService
+    ports:
+      - "3004:3004"
+    depends_on:
+      - reverse-proxy
+    volumes:
+      - type: bind
+        source: ./microservices/EmailService
+        target: /src/app
+    labels:
+     - "traefik.http.middlewares.validation-auth.forwardauth.address=http://auth_service.localhost/validationAuth"
+     - "traefik.http.routers.email_service.middlewares=validation-auth"
+     - "traefik.http.routers.email_service.entrypoints=web" 
+     - "traefik.http.routers.email_service.rule=Host(`email_service.localhost`)"
+     - "traefik.http.services.email_service.loadbalancer.server.port=3004"
+    networks:
+      - proxyNetwork
+      - serviceNetwork
+
+
+  review_service:
+    build: ./microservices/ReviewService
+    ports:
+      - "3001:3001"
+    depends_on:
+      - reverse-proxy
+    volumes:
+      - type: bind
+        source: ./microservices/ReviewService
+        target: /src/app
+    labels:
+     - "traefik.http.middlewares.validation-auth.forwardauth.address=http://auth_service.localhost/validationAuth"
+     - "traefik.http.routers.review_service.middlewares=validation-auth"
+     - "traefik.http.routers.review_service.entrypoints=web" 
+     - "traefik.http.routers.review_service.rule=Host(`review_service.localhost`)"
+     - "traefik.http.services.review_service.loadbalancer.server.port=3001"
+    networks:
+      - proxyNetwork
+      - serviceNetwork
+  
+  # search_service:
+  #   build: ./microservices/SearchService
+  #   ports:
+  #     - "3002:3002"
+  #   networks:
+  #     - serviceNetwork
+
+  auth_service:
+    build: ./microservices/AuthService
+    ports:
+      - "3003:3003"
+    depends_on:
+      - reverse-proxy
+    volumes:
+      - type: bind
+        source: ./microservices/AuthService
+        target: /src/app
+    labels:
+     - "traefik.http.routers.auth_service.entrypoints=web" 
+     - "traefik.http.routers.auth_service.rule=Host(`auth_service.localhost`)"
+     - "traefik.http.services.auth_service.loadbalancer.server.port=3003"
+    networks:
+      - proxyNetwork
+      - authService
+
+
+networks:
+  authService:
+    driver: bridge
+  serviceNetwork:
+    driver: bridge
+  proxyNetwork:
+    driver: bridge
