@@ -1,7 +1,4 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
-name: Node.js CI
+name: CI-CD
 
 on:
   push:
@@ -19,17 +16,21 @@ jobs:
       strategy:
         matrix:
           node-version: [16.x]
-          # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
       steps:
-      - uses: actions/checkout@v3
+      - name: CHECK-OUT GIT REPOSITORY
+        uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          #cache: 'npm'
-      - run: npm ci
-      - run: npm run build --if-present
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+      - name: INSTALL DEPENDENCIES
+        run: npm ci
+      - name: BUILDING APP
+        run: npm run build --if-present
+      #- name: TESTINT APP
       #- run: npm test
       
   microservices2:
@@ -41,7 +42,6 @@ jobs:
       strategy:
         matrix:
           node-version: [16.x]
-          # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
       steps:
       - name: CHECK-OUT GIT REPOSITORY
@@ -50,7 +50,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          #cache: 'npm'
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
       - name: INSTALL DEPENDENCIES
         run: npm ci
       - name: BUILDING APP
@@ -70,12 +71,17 @@ jobs:
           # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
       steps:
-      - uses: actions/checkout@v3
+      - name: CHECK-OUT GIT REPOSITORY
+        uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          #cache: 'npm'
-      - run: npm ci
-      - run: npm run build --if-present
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+      - name: INSTALL DEPENDENCIES
+        run: npm ci
+      - name: BUILDING APP
+        run: npm run build --if-present
+      #- name: TESTINT APP
       #- run: npm test
