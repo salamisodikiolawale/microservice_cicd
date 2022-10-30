@@ -7,6 +7,33 @@ on:
     branches: [ "develop" ]
 
 jobs:
+
+  Frontend:
+      runs-on: ubuntu-latest
+      defaults:
+        run:
+          working-directory: ./frontend
+
+      strategy:
+        matrix:
+          node-version: [16.x]
+
+      steps:
+      - name: CHECK-OUT GIT REPOSITORY
+        uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+      - name: INSTALL DEPENDENCIES
+        run: npm ci
+      - name: BUILDING APP
+        run: npm run build --if-present
+      #- name: TESTINT APP
+      #- run: npm test
+
   AuthService:
       runs-on: ubuntu-latest
       defaults:
