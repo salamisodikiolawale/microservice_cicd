@@ -59,10 +59,20 @@ jobs:
         run: npm run build --if-present
       #- name: TESTINT APP
       #- run: npm test
+      - name: chemin
+        run: pws
+      - name: contenue
+        run: ls
       - name: Build & push Docker image
         uses: mr-smithers-excellent/docker-build-push@v5
         with:
-          run: pwd
+          image: sodiki/aos_movie_auth_service
+          tags: latest
+          registry: docker.io
+          dockerfile: Dockerfile
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
       # - name: build container
       #   run: docker-compose up -d --build
       
