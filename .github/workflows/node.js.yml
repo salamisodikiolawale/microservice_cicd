@@ -59,8 +59,10 @@ jobs:
         run: npm run build --if-present
       #- name: TESTINT APP
       #- run: npm test
+      - name: GIT SWITCH REPO
+        uses: actions/checkout@v3
       - name: Build & push Docker image
-        uses: actions/checkout@v3 && mr-smithers-excellent/docker-build-push@v5
+        uses: mr-smithers-excellent/docker-build-push@v5
         with:
           image: sodiki/aos_movie_authService
           tags: latest
