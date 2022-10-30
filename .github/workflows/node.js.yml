@@ -180,8 +180,8 @@ jobs:
           dockerfile: Dockerfile
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-        - name: build container
-          run: docker-compose up -d --build
+      - name: build container
+        run: docker-compose up -d --build
 
   SearchService:
       runs-on: ubuntu-latest
