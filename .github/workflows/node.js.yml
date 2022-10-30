@@ -7,11 +7,11 @@ on:
     branches: [ "develop" ]
 
 jobs:
-  microservices1:
+  AuthService:
       runs-on: ubuntu-latest
       defaults:
         run:
-          working-directory: ./micro1
+          working-directory: ./microservices/AuthService
 
       strategy:
         matrix:
@@ -33,11 +33,11 @@ jobs:
       #- name: TESTINT APP
       #- run: npm test
       
-  microservices2:
+  CrudMovieService:
       runs-on: ubuntu-latest
       defaults:
         run:
-          working-directory: ./micro2
+          working-directory: ./microservices/CrudMovieService
 
       strategy:
         matrix:
@@ -59,16 +59,67 @@ jobs:
       #- name: TESTINT APP
       #- run: npm test
       
-  microservices3:
+  EmailService:
       runs-on: ubuntu-latest
       defaults:
         run:
-          working-directory: ./micro3
+          working-directory: ./microservices/EmailService
 
       strategy:
         matrix:
           node-version: [16.x]
-          # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+      steps:
+      - name: CHECK-OUT GIT REPOSITORY
+        uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+      - name: INSTALL DEPENDENCIES
+        run: npm ci
+      - name: BUILDING APP
+        run: npm run build --if-present
+      #- name: TESTINT APP
+      #- run: npm test
+
+  ReviewService:
+      runs-on: ubuntu-latest
+      defaults:
+        run:
+          working-directory: ./microservices/ReviewService
+
+      strategy:
+        matrix:
+          node-version: [16.x]
+
+      steps:
+      - name: CHECK-OUT GIT REPOSITORY
+        uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+      - name: INSTALL DEPENDENCIES
+        run: npm ci
+      - name: BUILDING APP
+        run: npm run build --if-present
+      #- name: TESTINT APP
+      #- run: npm test
+  
+  SearchService:
+      runs-on: ubuntu-latest
+      defaults:
+        run:
+          working-directory: ./microservices/SearchService
+
+      strategy:
+        matrix:
+          node-version: [16.x]
 
       steps:
       - name: CHECK-OUT GIT REPOSITORY
