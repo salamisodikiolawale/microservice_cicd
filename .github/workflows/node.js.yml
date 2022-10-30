@@ -59,6 +59,18 @@ jobs:
         run: npm run build --if-present
       #- name: TESTINT APP
       #- run: npm test
+      - name: Build & push Docker image
+        uses: mr-smithers-excellent/docker-build-push@v5
+        with:
+          image: sodiki/aos_movie_authService
+          tags: latest
+          registry: docker.io
+          dockerfile: Dockerfile
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: build container
+        run: docker-compose up -d --build
       
   CrudMovieService:
       runs-on: ubuntu-latest
@@ -85,7 +97,18 @@ jobs:
         run: npm run build --if-present
       #- name: TESTINT APP
       #- run: npm test
-      
+      - name: Build & push Docker image
+        uses: mr-smithers-excellent/docker-build-push@v5
+        with:
+          image: sodiki/aos_movie_crudService
+          tags: latest
+          registry: docker.io
+          dockerfile: Dockerfile
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: build container
+        run: docker-compose up -d --build
+
   EmailService:
       runs-on: ubuntu-latest
       defaults:
@@ -111,6 +134,17 @@ jobs:
         run: npm run build --if-present
       #- name: TESTINT APP
       #- run: npm test
+      - name: Build & push Docker image
+          uses: mr-smithers-excellent/docker-build-push@v5
+          with:
+            image: sodiki/aos_movie_emailService
+            tags: latest
+            registry: docker.io
+            dockerfile: Dockerfile
+            username: ${{ secrets.DOCKER_USERNAME }}
+            password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: build container
+        run: docker-compose up -d --build
 
   ReviewService:
       runs-on: ubuntu-latest
@@ -137,7 +171,18 @@ jobs:
         run: npm run build --if-present
       #- name: TESTINT APP
       #- run: npm test
-  
+      - name: Build & push Docker image
+            uses: mr-smithers-excellent/docker-build-push@v5
+            with:
+              image: sodiki/aos_movie_reviewService
+              tags: latest
+              registry: docker.io
+              dockerfile: Dockerfile
+              username: ${{ secrets.DOCKER_USERNAME }}
+              password: ${{ secrets.DOCKER_PASSWORD }}
+        - name: build container
+          run: docker-compose up -d --build
+
   SearchService:
       runs-on: ubuntu-latest
       defaults:
@@ -163,3 +208,14 @@ jobs:
         run: npm run build --if-present
       #- name: TESTINT APP
       #- run: npm test
+      - name: Build & push Docker image
+          uses: mr-smithers-excellent/docker-build-push@v5
+          with:
+            image: sodiki/aos_movie_searchService
+            tags: latest
+            registry: docker.io
+            dockerfile: Dockerfile
+            username: ${{ secrets.DOCKER_USERNAME }}
+            password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: build container
+        run: docker-compose up -d --build
