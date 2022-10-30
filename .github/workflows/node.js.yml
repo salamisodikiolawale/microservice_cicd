@@ -60,7 +60,7 @@ jobs:
       #- name: TESTINT APP
       #- run: npm test
       - name: chemin
-        run: pws
+        run: pwd
       - name: contenue
         run: ls
       - name: Build & push Docker image
