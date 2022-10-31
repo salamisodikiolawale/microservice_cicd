@@ -65,7 +65,6 @@ jobs:
           image: sodiki/aos_movie_auth_service
           tags: latest
           registry: docker.io
-          # directory: /home/runner/work/microservice_cicd/microservice_cicd/microservices/AuthService/
           dockerfile: Dockerfile
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
