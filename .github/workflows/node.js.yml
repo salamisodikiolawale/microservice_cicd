@@ -36,9 +36,9 @@ jobs:
 
   AuthService:
       runs-on: ubuntu-latest
-      defaults:
-        run:
-          working-directory: ./microservices/AuthService
+      # defaults:
+      #   run:
+      #     working-directory: ./microservices/AuthService
 
       strategy:
         matrix:
