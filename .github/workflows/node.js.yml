@@ -60,7 +60,7 @@ jobs:
       #- name: TESTINT APP
       #- run: npm test
       - name: Build & push Docker image
-        uses: mr-smithers-excellent/docker-build-push@v5
+        uses: docker/build-push-action@v3
         with:
           context: ./microservices/AuthService
           image: sodiki/aos_movie_auth_service
