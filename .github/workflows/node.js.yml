@@ -62,7 +62,7 @@ jobs:
       - name: Build & push Docker image
         uses: mr-smithers-excellent/docker-build-push@v5
         with:
-          context: .
+          context: ./microservices/AuthService
           image: sodiki/aos_movie_auth_service
           tags: latest
           registry: docker.io
