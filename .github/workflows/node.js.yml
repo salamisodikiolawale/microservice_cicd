@@ -59,6 +59,13 @@ jobs:
         run: npm run build --if-present
       #- name: TESTINT APP
       #- run: npm test
+      - name: Temporarily save webpack artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: webpack-artifact
+          path: build
+          retention-days: 1
+
       - name: Build & push Docker image
         uses: mr-smithers-excellent/docker-build-push@v5
         with:
