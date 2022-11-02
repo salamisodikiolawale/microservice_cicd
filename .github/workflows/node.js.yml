@@ -60,8 +60,7 @@ jobs:
       #- name: TESTINT APP
       #- run: npm test
       - name: test directory
-        run:
-          working-directory: ./microservices/AuthService
+        run: cd ./microservices/AuthService
       - name: Build & push Docker image
         uses: mr-smithers-excellent/docker-build-push@v5
         with:
