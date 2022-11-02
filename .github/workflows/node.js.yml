@@ -59,7 +59,7 @@ jobs:
         run: npm run build --if-present
       #- name: TESTINT APP
       #- run: npm test
-      - defaults:
+      - name: test directory
         run:
           working-directory: ./microservices/AuthService
       - name: Build & push Docker image
